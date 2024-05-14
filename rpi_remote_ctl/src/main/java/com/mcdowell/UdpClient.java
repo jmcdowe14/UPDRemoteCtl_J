@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class UdpClient{
 	
 	String destIP;
-	int destPort;
+	int destPort = 4001; //default port
 	InetAddress ip;
 	byte[] buffer;
 	DatagramSocket dgSocket;
@@ -22,8 +22,9 @@ public class UdpClient{
 	enum MachineState {START, READY, STANDBY, STATUS, LAUNCH, RELOAD, QUIT};
 
 	UdpClient(){
-		buffer = null;
-		try{ip = InetAddress.getByName(destIP);
+		buffer = null;		
+		//use localhost if no ip given
+		try{ip = InetAddress.getLocalHost();
 			dgSocket = new DatagramSocket();
 		}catch(Exception e){
 			System.out.println(e.fillInStackTrace());
@@ -61,8 +62,10 @@ public class UdpClient{
 	{ 
 
 		//Instantiate GUI and get user input for destIP and destPort
-
-		UdpClient client = new UdpClient("192.168.0.10", 4001);
+		
+		//uncomment for localhost testing
+		UdpClient client = new UdpClient();
+		//UdpClient client = new UdpClient("192.168.0.116", 4001);
 		try{
 			client.connect();
 		}catch(Exception e){
